@@ -25,10 +25,5 @@
 	"autoload": {
 		"psr-4": { "snapcms\\mandrill\\": "" }
 	},
-	"require-dev": {
-		"codeception/codeception": " 1.8.*@dev",
-		"codeception/specify": " *",
-		"codeception/verify": " *",
-		"yiisoft/yii2-faker": " *"
-	}
+	"require-dev": {}
 }
