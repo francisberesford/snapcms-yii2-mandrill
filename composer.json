@@ -1,0 +1,34 @@
+{
+	"name": "snapfrozen/snapcms-mandrill",
+	"description": "Mandrill mailer module for SnapCMS",
+	"keywords": ["yii2", "framework", "mailer", "snapcms"],
+	"homepage": "http://www.snapfrozen.com.au",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Francis Beresford",
+			"email": "francis@snapfrozen.com.au",
+			"homepage": "http://www.snapfrozen.com.au/",
+			"role": "Project lead"
+		}
+	],
+	"minimum-stability": "dev",
+	"support": {
+		
+	},
+	"require": {
+		"php": ">=5.4.0",
+		"yiisoft/yii2": "*",
+		"yiisoft/yii2-apidoc": "*",
+		"mandrill/mandrill": "*"
+	},
+	"autoload": {
+		"psr-4": { "snapcms\\mandrill\\": "" }
+	},
+	"require-dev": {
+		"codeception/codeception": " 1.8.*@dev",
+		"codeception/specify": " *",
+		"codeception/verify": " *",
+		"yiisoft/yii2-faker": " *"
+	}
+}
