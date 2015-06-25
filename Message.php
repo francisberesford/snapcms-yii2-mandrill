@@ -6,6 +6,8 @@ use Yii;
 use yii\mail\BaseMessage;
 use yii\helpers\HtmlPurifier;
 use yii\validators\EmailValidator;
+use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
 
 /**
  * @author Francis Beresford <francis@snapfrozen.com>
@@ -28,7 +30,7 @@ class Message extends BaseMessage
     private $_tags = [];
     private $_attachments = [];
     private $_images = [];
-
+    private $_finfo;
     /**
      * @inheritdoc
      */
