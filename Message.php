@@ -6,8 +6,6 @@ use Yii;
 use yii\mail\BaseMessage;
 use yii\helpers\HtmlPurifier;
 use yii\validators\EmailValidator;
-use yii\helpers\ArrayHelper;
-use yii\helpers\FileHelper;
 
 /**
  * @author Francis Beresford <francis@snapfrozen.com>
@@ -30,7 +28,10 @@ class Message extends BaseMessage
     private $_tags = [];
     private $_attachments = [];
     private $_images = [];
-    private $_finfo;
+    private $_template;
+    private $_merge_vars = [];
+    private $_global_merge_vars = [];
+
     /**
      * @inheritdoc
      */
@@ -166,6 +167,29 @@ class Message extends BaseMessage
     public function setTextBody($text)
     {
         $this->_textBody = HtmlPurifier::process($text);
+        return $this;
+    }
+    
+    public function setTemplate($template)
+    {
+        $this->_template = $template;
+        return $this;
+    }
+    
+    public function getTemplate()
+    {
+        return $this->_template;
+    }
+    
+    public function setMergeVars($vars)
+    {
+        $this->_merge_vars = $vars;
+        return $this;
+    }
+    
+    public function setGlobalMergeVars($vars)
+    {
+        $this->_global_merge_vars = $vars;
         return $this;
     }
 
@@ -324,9 +348,9 @@ class Message extends BaseMessage
     public function toString()
     {
         return $this->getSubject() . ' - Recipients:'
-                . ' [TO] ' . implode('; ', $this->getTo())
-                . ' [CC] ' . implode('; ', $this->getCc())
-                . ' [BCC] ' . implode('; ', $this->getBcc());
+            . ' [TO] ' . implode('; ', $this->getTo())
+            . ' [CC] ' . implode('; ', $this->getCc())
+            . ' [BCC] ' . implode('; ', $this->getBcc());
     }
 
     /**
@@ -433,6 +457,8 @@ class Message extends BaseMessage
             'tags' => $this->_tags,
             'attachments' => $this->_attachments,
             'images' => $this->_images,
+            'global_merge_vars' => $this->_global_merge_vars,
+            'merge_vars' => $this->_merge_vars,
         ];
     }
 
