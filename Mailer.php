@@ -48,9 +48,12 @@ class Mailer extends BaseMailer
             $address = implode(', ', array_keys($address));
         }
         Yii::info('Sending email "' . $message->getSubject() . '" to "' . $address . '"', __METHOD__);
-        
         try {
-            $this->Mandrill->messages->send($message->getMandrillMessageArray());
+            if(!$message->template) {
+                $resp = $this->Mandrill->messages->send($message->getMandrillMessageArray());
+            } else {
+                $resp = $this->Mandrill->messages->sendTemplate($message->template, [], $message->getMandrillMessageArray());
+            }
         } catch (Mandrill_Error $e) {
             \Yii::error('A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage(), __METHOD__);
             return false;
