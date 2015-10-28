@@ -6,6 +6,8 @@ use Yii;
 use yii\mail\BaseMessage;
 use yii\helpers\HtmlPurifier;
 use yii\validators\EmailValidator;
+use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
 
 /**
  * @author Francis Beresford <francis@snapfrozen.com>
@@ -31,6 +33,7 @@ class Message extends BaseMessage
     private $_template;
     private $_merge_vars = [];
     private $_global_merge_vars = [];
+    private $_finfo = null;
 
     /**
      * @inheritdoc
