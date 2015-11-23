@@ -8,6 +8,7 @@ use yii\helpers\HtmlPurifier;
 use yii\validators\EmailValidator;
 use yii\helpers\ArrayHelper;
 use yii\helpers\FileHelper;
+use snapcms\models\Config;
 
 /**
  * @author Francis Beresford <francis@snapfrozen.com>
@@ -445,16 +446,37 @@ class Message extends BaseMessage
      */
     public function getMandrillMessageArray()
     {
+        $recipients = $this->_recipients;
+        $htmlBody = $this->_htmlBody;
+        
+        //if dev environment only send it to the admin email and append the 
+        //recipients it would have sent to, to the end of the email
+        if(YII_ENV == 'dev') 
+        {
+            $htmlBody .= '<pre>' . print_r($this->_recipients, true) . '</pre>';
+            
+            $fromMail = Config::getData('general/site.admin_email');
+            $fromName = Config::getData('general/site.admin_email_from');
+            
+            $recipients = [
+                [
+                    'email' => $fromMail,
+                    'name' => $fromName,
+                    'type' => 'to',
+                ]
+            ];
+        }
+        
         return [
             'headers' => [
                 'Reply-To' => $this->getReplyToString(),
             ],
-            'html' => $this->_htmlBody,
+            'html' => $htmlBody,
             'text' => $this->_textBody,
             'subject' => $this->getSubject(),
             'from_email' => $this->_from,
             'from_name' => $this->_fromName,
-            'to' => $this->_recipients,
+            'to' => $recipients,
             'track_opens' => true,
             'track_clicks' => true,
             'tags' => $this->_tags,
