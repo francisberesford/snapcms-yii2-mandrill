@@ -454,11 +454,16 @@ class Message extends BaseMessage
         //recipients it would have sent to, to the end of the email
         if(YII_ENV == 'dev') 
         {
-            $htmlBody .= '<p>&nbsp;</p><pre>' . print_r($this->_recipients, true) . '</pre>';
+            $htmlBody .= '<p>&nbsp;</p><pre>' . print_r($this->_recipients, true).'</pre>';
             $textBody .= "\n\n" . print_r($this->_recipients, true);
             
             $fromMail = Config::getData('general/site.admin_email');
             $fromName = Config::getData('general/site.admin_email_from');
+            
+            $this->_global_merge_vars[] = [
+                'name'    => 'debug',
+                'content' => '<pre>' . print_r($this->_recipients, true) . '</pre>'
+            ];
             
             $recipients = [
                 [
@@ -466,6 +471,13 @@ class Message extends BaseMessage
                     'name' => $fromName,
                     'type' => 'to',
                 ]
+            ];
+        } 
+        else 
+        {
+            $this->_global_merge_vars[] = [
+                'name'    => 'debug',
+                'content' => ''
             ];
         }
         
