@@ -448,12 +448,14 @@ class Message extends BaseMessage
     {
         $recipients = $this->_recipients;
         $htmlBody = $this->_htmlBody;
+        $textBody = $this->_textBody;
         
         //if dev environment only send it to the admin email and append the 
         //recipients it would have sent to, to the end of the email
         if(YII_ENV == 'dev') 
         {
-            $htmlBody .= '<pre>' . print_r($this->_recipients, true) . '</pre>';
+            $htmlBody .= '<p>&nbsp;</p><pre>' . print_r($this->_recipients, true) . '</pre>';
+            $textBody .= "\n\n" . print_r($this->_recipients, true);
             
             $fromMail = Config::getData('general/site.admin_email');
             $fromName = Config::getData('general/site.admin_email_from');
@@ -472,7 +474,7 @@ class Message extends BaseMessage
                 'Reply-To' => $this->getReplyToString(),
             ],
             'html' => $htmlBody,
-            'text' => $this->_textBody,
+            'text' => $textBody,
             'subject' => $this->getSubject(),
             'from_email' => $this->_from,
             'from_name' => $this->_fromName,
