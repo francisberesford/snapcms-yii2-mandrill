@@ -462,7 +462,7 @@ class Message extends BaseMessage
             
             $this->_global_merge_vars[] = [
                 'name'    => 'debug',
-                'content' => '<pre>' . print_r($this->_recipients, true) . '</pre>'
+                'content' => '<p>On the production server this email would have been sent to:</p><pre>' . print_r($this->_recipients, true) . '</pre>'
             ];
             
             $recipients = [
