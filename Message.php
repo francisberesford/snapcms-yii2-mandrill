@@ -472,6 +472,11 @@ class Message extends BaseMessage
                     'type' => 'to',
                 ]
             ];
+            
+            foreach($this->_merge_vars as &$var)
+            {
+                $var['rcpt'] = $fromMail;
+            }
         } 
         else 
         {
