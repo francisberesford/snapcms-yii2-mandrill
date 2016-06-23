@@ -457,8 +457,9 @@ class Message extends BaseMessage
             $htmlBody .= '<p>&nbsp;</p><pre>' . print_r($this->_recipients, true).'</pre>';
             $textBody .= "\n\n" . print_r($this->_recipients, true);
             
-            $fromMail = Config::getData('general/site.admin_email');
+            $toMail = Config::getData('general/site.admin_email');
             $fromName = Config::getData('general/site.admin_email_from');
+            $this->_from = Config::getData('general/site.testing_email_from');
             
             $this->_global_merge_vars[] = [
                 'name'    => 'debug',
@@ -467,7 +468,7 @@ class Message extends BaseMessage
             
             $recipients = [
                 [
-                    'email' => $fromMail,
+                    'email' => $toMail,
                     'name' => $fromName,
                     'type' => 'to',
                 ]
@@ -475,7 +476,7 @@ class Message extends BaseMessage
             
             foreach($this->_merge_vars as &$var)
             {
-                $var['rcpt'] = $fromMail;
+                $var['rcpt'] = $toMail;
             }
         } 
         else 
