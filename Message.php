@@ -125,7 +125,7 @@ class Message extends BaseMessage
      */
     public function setReplyTo($replyTo)
     {
-        $this->_replyTo [] = $replyTo;
+        $this->setRecipients('replyTo', $replyTo);
         return $this;
     }
 
