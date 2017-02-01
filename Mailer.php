@@ -54,7 +54,7 @@ class Mailer extends BaseMailer
             } else {
                 $resp = $this->Mandrill->messages->sendTemplate($message->template, [], $message->getMandrillMessageArray());
             }
-        } catch (Mandrill_Error $e) {
+        } catch (\Mandrill_Error $e) {
             \Yii::error('A mandrill error occurred: ' . get_class($e) . ' - ' . $e->getMessage(), __METHOD__);
             return false;
         }
