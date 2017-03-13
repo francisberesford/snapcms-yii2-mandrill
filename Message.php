@@ -125,7 +125,7 @@ class Message extends BaseMessage
      */
     public function setReplyTo($replyTo)
     {
-        $this->setRecipients('replyTo', $replyTo);
+        $this->_replyTo = $replyTo;
         return $this;
     }
 
@@ -431,6 +431,7 @@ class Message extends BaseMessage
         } else {
             Yii::error($errorMessage, __METHOD__);
         }
+
         $this->_recipients[] = [
             'email' => $email,
             'name' => $name,
